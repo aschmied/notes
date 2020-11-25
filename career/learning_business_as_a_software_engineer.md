@@ -58,7 +58,7 @@ Book by Kaufman. [Link](https://personalmba.com/). Another highly reviewed book 
 
 ### Google "DIY MBA" for Recommended Reading Lists
 
-One recommendation was a web search for "DIY MBA." This produced a promising-looking [Reddit post](https://www.reddit.com/r/Entrepreneur/comments/663vkv/diymba_a_compiled_list_of_19_free_courses_31_books/?utm_source=share&utm_medium=web2x&context=3), but the [linked site](www.skipmba.com/diy-mba-reading-list/) times out when I try to load it.
+One recommendation was a web search for "DIY MBA." This produced a promising-looking [Reddit post](https://www.reddit.com/r/Entrepreneur/comments/663vkv/diymba_a_compiled_list_of_19_free_courses_31_books/?utm_source=share&utm_medium=web2x&context=3), but the [linked site](www.skipmba.com/diy-mba-reading-list/) times out when I try to load it. An archive copy of the content is available on [archive.org](https://web.archive.org/web/20200217114735/http://www.skipmba.com/diy-mba-reading-list/).
 
 ### Some Recommended Topics
 
