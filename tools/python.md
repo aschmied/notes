@@ -1,6 +1,8 @@
 # Python
 
 * [Interesting Python Libs Of 2020](https://tryolabs.com/blog/2020/12/21/top-10-python-libraries-of-2020/)
+* [Python Testing](https://realpython.com/python-testing/). Extensive article. Covers testing, test runners, benchmarking to test for performance degredation, linting, security scanners, testing a flask app, integration tests, and more
+
 
 ## Stack Dump from Running Interpreter
 
