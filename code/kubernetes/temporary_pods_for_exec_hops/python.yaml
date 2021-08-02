@@ -1,0 +1,31 @@
+# Use this to get a shell inside the cluster on a system with Python
+# installed. Deploy it like:
+#
+#   kubectl apply -f <this-file>
+#   kubectl get pods
+#   kubectl exec -it anthonys-temp-with-python-deployment-<id> -- /bin/bash
+#
+# When you're done clean it up with
+# 
+#   kubectl delete -f <this-file>
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: anthonys-temp-with-python-deployment
+  labels:
+    app: anthonys-temp-with-python
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: anthonys-temp-with-python
+  template:
+    metadata:
+      labels:
+        app: anthonys-temp-with-python 
+    spec:
+      containers:
+      - name: anthonys-temp-with-python
+        image: python:3.7-slim-buster
+        command: ["sleep", "infinity"]

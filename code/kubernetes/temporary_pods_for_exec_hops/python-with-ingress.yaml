@@ -1,0 +1,71 @@
+# Use this to get a shell inside the cluster on a system with Python
+# installed and a DNS pointing at your pod. Deploy it like:
+#
+#   kubectl apply -f <this-file>
+#   kubectl get pods
+#   kubectl exec -it anthonys-temp-with-python-deployment-<id> -- /bin/bash
+#
+# When you're done clean it up with
+# 
+#   kubectl delete -f <this-file>
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: anthonys-temp-with-python-deployment
+  labels:
+    app: anthonys-temp-with-python
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: anthonys-temp-with-python
+  template:
+    metadata:
+      labels:
+        app: anthonys-temp-with-python 
+    spec:
+      containers:
+      - name: anthonys-temp-with-python
+        image: python:3.7-slim-buster
+        command: ["sleep", "infinity"]
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: anthonys-temp-with-python-service
+  labels:
+    app: anthonys-temp-with-python
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: anthonys-temp-with-python
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: anthonys-temp-with-python-ingress
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "64k"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+spec:
+  tls:
+  - hosts:
+    - aschmied-test.nmx.ca
+    secretName: anthonys-temp-with-python-tls-secret
+  rules:
+  - host: aschmied-test.nmx.ca
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: anthonys-temp-with-python-service
+          servicePort: 8080

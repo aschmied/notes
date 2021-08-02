@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: anthony-test-pvc-file-reader
+spec:
+  template:
+    spec:
+      containers:
+      - name: anthony-test-pvc-file-reader
+        image: debian:8-slim
+        command: ["cat", "/myvolume/hello.txt"]
+        volumeMounts:
+        - name: myvolume
+          mountPath: /myvolume
+      restartPolicy: Never
+      volumes:
+        # ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#claims-as-volumes
+        - name: myvolume
+          persistentVolumeClaim:
+            claimName: anthonys-test-pvc
+  backoffLimit: 1

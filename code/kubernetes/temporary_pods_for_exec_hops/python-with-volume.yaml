@@ -1,0 +1,72 @@
+# Use this to get a shell inside the cluster on a system with Python
+# installed. Deploy it like:
+#
+#   kubectl apply -f <this-file>
+#   kubectl get pods
+#   kubectl exec -it anthonys-temp-with-python-deployment-<id> -- /bin/bash
+#
+# When you're done clean it up with
+# 
+#   kubectl delete -f <this-file>
+
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: anthonys-temp-with-python-pv
+  labels:
+    type: EFS-PV
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: efs-sc
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: "fs-8c6a887b"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: anthonys-temp-with-python-pvc
+  labels:
+    type: EFS-PVC
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: efs-sc
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: anthonys-temp-with-python-deployment
+  labels:
+    app: anthonys-temp-with-python
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: anthonys-temp-with-python
+  template:
+    metadata:
+      labels:
+        app: anthonys-temp-with-python 
+    spec:
+      containers:
+      - name: anthonys-temp-with-python
+        image: python:3.7-slim-buster
+        command: ["sleep", "infinity"]
+        volumeMounts:
+          - name: anthonys-temp-with-python-volume
+            mountPath: /storage
+      volumes:
+        - name: anthonys-temp-with-python-volume
+          persistentVolumeClaim:
+            claimName: anthonys-temp-with-python-pvc
