@@ -6,6 +6,8 @@ These notes give examples of some basic data visualizations using Pandas. The ex
 
 * Python. I used 3.9.6
 * Pandas. I used 1.3.2
+* Matplotlib (for plottin). I used 3.4.2
+* Seaborn (for correlation heatmap display). I used 0.11.2
 * iPython (optional). I used 7.26.0
 
 ## Getting Data
@@ -147,39 +149,90 @@ These notes give examples of some basic data visualizations using Pandas. The ex
 
 * Repeat this whole process to load the crime data into a `DataFrame` named `crime`
 
-* There is a complication with province names in the crime data: they have a number at the end like "New Brunswick [13]." We want them to be the same as in police, use [`rename`](https://pandas.pydata.org/docs/user_guide/basics.html#basics-rename) to rename the columns
+* We can also `rename` the [columns](https://pandas.pydata.org/docs/user_guide/basics.html#basics-rename) and [indices](https://pandas.pydata.org/docs/reference/api/pandas.Index.rename.html) to make the data look a little nicer. Rename REF_DATE to Year, GEO
+
+* There is a complication with province names in the crime data: they have a number at the end like "New Brunswick [13]." We want them to be the same as in police, use [`rename`]() to rename the columns
 
 * I wrote a "load_data.py" scrip to do this all for you. In iPython you can run it with `%run`:
 
-        In [51]: %run load_data.py
+        In [30]: police
+        Out[30]:
+        GEO   New Brunswick  Newfoundland and Labrador  Nova Scotia  Ontario  Prince Edward Island  Quebec
+        Year
+        1998          170.9                      143.7        170.5    179.9                 149.5   186.9
+        1999          171.9                      143.8        169.4    182.7                 144.5   187.8
+        2000          174.0                      146.2        171.3    185.2                 150.2   188.1
+        2001          175.6                      146.9        169.6    186.4                 148.5   188.3
+        2002          174.3                      149.9        170.3    187.1                 156.3   194.0
+        2003          170.8                      148.1        171.5    189.8                 158.9   192.0
+        2004          173.7                      148.0        171.9    187.4                 150.4   191.4
+        2005          173.4                      150.9        173.1    186.9                 154.3   194.6
+        2006          173.1                      156.5        177.7    187.6                 159.6   197.8
+        2007          177.9                      164.6        188.0    191.6                 164.8   198.0
+        2008          181.4                      172.8        199.2    193.6                 166.5   198.5
+        2009          181.9                      177.5        200.1    196.6                 167.3   198.0
+        2010          185.6                      179.9        203.0    200.3                 168.0   196.6
+        2011          182.2                      178.1        202.7    199.0                 169.5   197.4
+        2012          179.9                      175.9        205.0    196.1                 170.9   198.2
+        2013          177.2                      174.0        201.5    195.1                 161.0   197.3
+        2014          170.0                      169.5        200.7    192.0                 163.6   198.7
+        2015          168.4                      168.3        198.1    191.2                 156.4   195.9
+        2016          168.3                      171.9        193.3    188.6                 154.5   194.0
+        2017          160.9                      172.4        192.7    184.6                 147.5   191.4
+        2018          159.5                      171.2        193.9    176.9                 140.6   189.0
+        2019          161.0                      172.9        190.7    174.0                 136.7   184.1
 
-        In [52]: police
-        Out[52]:
-        GEO       New Brunswick  Newfoundland and Labrador  Nova Scotia  Ontario  Prince Edward Island  Quebec
-        REF_DATE
-        1998              170.9                      143.7        170.5    179.9                 149.5   186.9
-        1999              171.9                      143.8        169.4    182.7                 144.5   187.8
-        2000              174.0                      146.2        171.3    185.2                 150.2   188.1
-        2001              175.6                      146.9        169.6    186.4                 148.5   188.3
-        2002              174.3                      149.9        170.3    187.1                 156.3   194.0
-        2003              170.8                      148.1        171.5    189.8                 158.9   192.0
-        2004              173.7                      148.0        171.9    187.4                 150.4   191.4
-        2005              173.4                      150.9        173.1    186.9                 154.3   194.6
-        2006              173.1                      156.5        177.7    187.6                 159.6   197.8
-        2007              177.9                      164.6        188.0    191.6                 164.8   198.0
-        2008              181.4                      172.8        199.2    193.6                 166.5   198.5
-        2009              181.9                      177.5        200.1    196.6                 167.3   198.0
-        2010              185.6                      179.9        203.0    200.3                 168.0   196.6
-        2011              182.2                      178.1        202.7    199.0                 169.5   197.4
-        2012              179.9                      175.9        205.0    196.1                 170.9   198.2
-        2013              177.2                      174.0        201.5    195.1                 161.0   197.3
-        2014              170.0                      169.5        200.7    192.0                 163.6   198.7
-        2015              168.4                      168.3        198.1    191.2                 156.4   195.9
-        2016              168.3                      171.9        193.3    188.6                 154.5   194.0
-        2017              160.9                      172.4        192.7    184.6                 147.5   191.4
-        2018              159.5                      171.2        193.9    176.9                 140.6   189.0
-        2019              161.0                      172.9        190.7    174.0                 136.7   184.1
+## Displaying the Data
 
+* Import `pyplot`. We use this to display the plots on the screen:
+
+        from matplotlib import pyplot as plt
+
+* First, look at number of police and number of reported crimes per 100,000 population over time. Pandas provides some basic plotting via the [`plot`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.plot.html) function:
+
+        police.plot(title='Police', ylabel='Number per 100,000 population')
+        crime.plot(title='Crime', ylabel='Rate per 100,000 population')
+        plt.show(block=False)
+
+* By default `plt.show` blocks until you close the figure. You can override this with the `block` arg
+
+* Note that by default, the y-axes do not start at 0. You can change this by mutating the axes returned by `plot`. See SO answer [here](https://stackoverflow.com/a/17787498/2833126)
+
+* You can also display this as a bar graph:
+
+        police.plot.bar()
+        plt.show(block=False)
+
+* If you want to see whether crime rates in neighbouring provinces change together, you can look at the scatter plots:
+
+        crime.plot(kind='scatter', x='Ontario', y='Quebec')
+        crime.plot(kind='scatter', x='Quebec', y='New Brunswick')
+        crime.plot(kind='scatter', x='New Brunswick', y='Nova Scotia')
+        plt.show(block=False)
+
+* The correlation between number of police and number of crimes could also be interesting. If policing is proactively increased to reduce the crime rate, then we might expect the number of crimes to go down as the number of police goes up. On the other hand, if policing is increased in response to a rising crime rate then we might expect them to go up together. Pandas makes this easy with [`corrwith`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.corrwith.html):
+
+        In [38]: police.corrwith(crime)
+        Out[38]:
+        GEO
+        New Brunswick                0.082076
+        Newfoundland and Labrador    0.336585
+        Nova Scotia                 -0.711602
+        Ontario                     -0.285588
+        Prince Edward Island         0.113888
+        Quebec                      -0.123139
+        dtype: float64
+
+* Finally, lets look at the crime rate data as a heatmap:
+
+        import seaborn as sns
+        ax = sns.heatmap(crime, square=True)
+        plt.subplots_adjust(bottom=0.3) # This makes more space for the long x-axis labels
+        plt.show()
+
+    The colour in this plot can make trends much easier to spot. For example, I was surprised to notice that Ontario and Quebec tend to have lower crime rates. I expected them to be higher because they contain the largest cities.
+
+* For much more on data visualization see the blog posts by [neelutiwari](https://www.analyticsvidhya.com/blog/2021/07/how-to-perform-data-visualization-with-pandas/) and [Marcelino](https://www.kaggle.com/pmarcelino/comprehensive-data-exploration-with-python)
 
 # References
 
