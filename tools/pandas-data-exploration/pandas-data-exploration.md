@@ -149,12 +149,11 @@ These notes give examples of some basic data visualizations using Pandas. The ex
 
 * Repeat this whole process to load the crime data into a `DataFrame` named `crime`
 
-* We can also `rename` the [columns](https://pandas.pydata.org/docs/user_guide/basics.html#basics-rename) and [indices](https://pandas.pydata.org/docs/reference/api/pandas.Index.rename.html) to make the data look a little nicer. Rename REF_DATE to Year, GEO
-
-* There is a complication with province names in the crime data: they have a number at the end like "New Brunswick [13]." We want them to be the same as in police, use [`rename`]() to rename the columns
+* We can also `rename` the [columns](https://pandas.pydata.org/docs/user_guide/basics.html#basics-rename) and [indices](https://pandas.pydata.org/docs/reference/api/pandas.Index.rename.html) to make the data look a little nicer. Rename REF_DATE to Year and get rid of the numbers from the column names in `crime`
 
 * I wrote a "load_data.py" scrip to do this all for you. In iPython you can run it with `%run`:
 
+        in [29]: %run load_data.py
         In [30]: police
         Out[30]:
         GEO   New Brunswick  Newfoundland and Labrador  Nova Scotia  Ontario  Prince Edward Island  Quebec
@@ -203,7 +202,7 @@ These notes give examples of some basic data visualizations using Pandas. The ex
         police.plot.bar()
         plt.show(block=False)
 
-* If you want to see whether crime rates in neighbouring provinces change together, you can look at the scatter plots:
+* If you want to see whether crime rates in neighbouring provinces change together, you can look at some scatter plots:
 
         crime.plot(kind='scatter', x='Ontario', y='Quebec')
         crime.plot(kind='scatter', x='Quebec', y='New Brunswick')
@@ -227,10 +226,10 @@ These notes give examples of some basic data visualizations using Pandas. The ex
 
         import seaborn as sns
         ax = sns.heatmap(crime, square=True)
-        plt.subplots_adjust(bottom=0.3) # This makes more space for the long x-axis labels
+        plt.subplots_adjust(bottom=0.3) # This makes more space for the x-axis labels since province names are long
         plt.show()
 
-    The colour in this plot can make trends much easier to spot. For example, I was surprised to notice that Ontario and Quebec tend to have lower crime rates. I expected them to be higher because they contain the largest cities.
+    The colour in this plot can make trends easier to spot. For example, I was surprised to notice that Ontario and Quebec tend to have lower crime rates. I expected them to be higher because they contain the largest cities
 
 * For much more on data visualization see the blog posts by [neelutiwari](https://www.analyticsvidhya.com/blog/2021/07/how-to-perform-data-visualization-with-pandas/) and [Marcelino](https://www.kaggle.com/pmarcelino/comprehensive-data-exploration-with-python)
 
