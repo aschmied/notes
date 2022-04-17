@@ -17,3 +17,7 @@
 * Terminate all connections to a DB: `SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE pid <> pg_backend_pid() AND datname = '<db-name>';`
 * List DBs: `\l`
 * Describe tables: `\d` or `\d <table-name>`
+
+# Choosing a DB
+
+* [Why Uber Engineering Switched from Postgres to MySQL](https://eng.uber.com/postgres-to-mysql-migration/)
