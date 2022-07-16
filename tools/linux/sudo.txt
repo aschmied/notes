@@ -1,0 +1,15 @@
+# Give User Sudo Access
+
+Edit sudoers:
+
+    sudo visudo /etc/sudoers
+
+and modify the sudo line like:
+
+    %sudo   ALL=(ALL:ALL) NOPASSWD:ALL
+
+`NOPASSWD:ALL` means they don't need to enter their password for any `sudo` commands.
+
+then
+
+    sudo usermod -aG sudo <username>
