@@ -5,3 +5,5 @@
     * [Video on the Linux bug](https://www.youtube.com/watch?v=UE7QX98-kO0)
     * [Detailed text on the Linux bug](https://engineering.indeedblog.com/blog/2019/12/unthrottled-fixing-cpu-limits-in-the-cloud/)
 * [Kubernetes networking demystified](https://www.stackrox.com/post/2020/01/kubernetes-networking-demystified/)
+* [EKS and the quest for IP addresses](https://www.tibobeijen.nl/2022/02/09/eks-ips-secondary-cidr-private-natgw/)
+    * Gives `tracepath` tool
