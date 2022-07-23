@@ -13,3 +13,7 @@ and modify the sudo line like:
 then
 
     sudo usermod -aG sudo <username>
+
+To switch to another user:
+
+    sudo su - <userid>
