@@ -163,7 +163,7 @@ def read_messages():
 
 def run_producer():
     client = build_client("anthony-redis-master.testing.svc.cluster.local", 6379)
-    producer = Producer(client, "summarycalc-message-stream")
+    producer = Producer(client, "anthony-message-stream")
     messages = read_messages()
     while True:
         for message in messages:
@@ -172,7 +172,7 @@ def run_producer():
 
 def run_consumer():
     client = build_client("anthony-redis-replicas.testing.svc.cluster.local", 6379)
-    consumer = Consumer(client, "summarycalc-message-stream")
+    consumer = Consumer(client, "anthony-message-stream")
     for message in consumer.read():
         pass
 
