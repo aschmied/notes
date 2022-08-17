@@ -37,10 +37,9 @@ import time
 
 import redis
 
-_PASSWORD = "mwPpWxI9Hx"
+_PASSWORD = "your-password"
 _REDIS_GET_ALL_MESSAGES_ID = "0-0"
 _REDIS_USE_DEFAULT_ID = "*"
-# Msgs here are representative of refinitiv RT messages.
 _BATCH_SIZE = 1  # 2K msgs/sec
 # _BATCH_SIZE = 10  # 17K msgs/sec
 # _BATCH_SIZE = 100  # 48K msgs/sec
