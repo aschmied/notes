@@ -8,9 +8,15 @@ and modify the sudo line like:
 
     %sudo   ALL=(ALL:ALL) NOPASSWD:ALL
 
-`NOPASSWD:ALL` means they don't need to enter their password for any `sudo` commands.
+`NOPASSWD:ALL` means they don't need to enter their password for any `sudo` commands. To instead make this change for a single user, do
 
-then
+    sudo visudo -f /etc/sudoers.d/<userid>
+
+and add a single line:
+
+    <userid> ALL=(ALL) NOPASSWD:ALL
+
+Then do
 
     sudo usermod -aG sudo <username>
 
