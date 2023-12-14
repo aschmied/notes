@@ -1,13 +1,10 @@
-FROM nanometrics/python3:1.0.0
+FROM python:3.10
 
 ENV PYTHONUNBUFFERED 1
-
-# RUN apk add tini
 
 COPY entrypoint.sh .
 RUN chmod u+x entrypoint.sh
 
 COPY main.py .
 
-# ENTRYPOINT ["tini", "-v", "--", "./entrypoint.sh"]
 ENTRYPOINT ["./entrypoint.sh"]
